@@ -87,16 +87,19 @@ public class Tests {
         _globalDriver.switchTo().frame(iframe);
 
         _globalDriver.findElement(By.id("ui-id-1")).click();//pasirenkamas objektas
-        String text0 = "Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.";
+        String text = "Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.";
         WebElement result = _globalDriver.findElement(By.id("ui-id-2"));
-        String openText0 = result.getText();
-        Assert.assertEquals(text0, openText0);
+        String openText = result.getText();
+        Assert.assertEquals(text, openText);
+        _globalDriver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 
-        _globalDriver.findElement(By.xpath("ui-id-3")).click();//pasirenkamas objektas
-        String text1 = "Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In suscipit faucibus urna.";
-        WebElement result1 = _globalDriver.findElement(By.xpath("/html/body/div/div[1]"));
-        String openText1 = result1.getText();
-        Assert.assertEquals(text1, openText1);
+        _globalDriver.findElement(By.id("ui-id-3")).click();//pasirenkamas objektas
+        text = "Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In suscipit faucibus urna.";
+        _globalDriver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+        result = _globalDriver.findElement(By.id("ui-id-4"));
+        openText = result.getText();
+        Assert.assertEquals(text, openText);
+        _globalDriver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 
         _globalDriver.findElement(By.id("ui-id-5")).click();//pasirenkamas objektas
         String text2 = "Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis. Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.\n" +
@@ -107,6 +110,7 @@ public class Tests {
         WebElement result2 = _globalDriver.findElement(By.id("ui-id-6"));
         String openText2 = result2.getText();
         Assert.assertEquals(text2, openText2);
+        _globalDriver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 
         _globalDriver.findElement(By.id("ui-id-7")).click();//pasirenkamas objektas
         String text3 = "Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est.\n" +
