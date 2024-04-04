@@ -39,7 +39,7 @@ public class Tests {
         dragAction.clickAndHold(dragElement).moveByOffset(-100, -50).build().perform();
     }
 
-        @Test//drag and drop test
+    @Test//drag and drop test
     public void testTC0201() {
         _globalDriver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         _globalDriver.findElement(By.xpath("/html/body/section/div[1]/div[2]/div[1]/ul/li[2]/a/figure")).click();//select Droppable
@@ -93,33 +93,44 @@ public class Tests {
         Assert.assertEquals(text, openText);
         _globalDriver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 
+
         _globalDriver.findElement(By.id("ui-id-3")).click();//pasirenkamas objektas
         text = "Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In suscipit faucibus urna.";
-        _globalDriver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         result = _globalDriver.findElement(By.id("ui-id-4"));
         openText = result.getText();
-        Assert.assertEquals(text, openText);
-        _globalDriver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+        Assert.assertEquals(openText, text);
 
         _globalDriver.findElement(By.id("ui-id-5")).click();//pasirenkamas objektas
-        String text2 = "Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis. Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.\n" +
-                "\n" +
+        text = "Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis. Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.\n" +
                 "List item one\n" +
                 "List item two\n" +
                 "List item three";
-        WebElement result2 = _globalDriver.findElement(By.id("ui-id-6"));
-        String openText2 = result2.getText();
-        Assert.assertEquals(text2, openText2);
-        _globalDriver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        result = _globalDriver.findElement(By.id("ui-id-6"));
+        openText = result.getText();
+        Assert.assertEquals(openText, text);
 
         _globalDriver.findElement(By.id("ui-id-7")).click();//pasirenkamas objektas
-        String text3 = "Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est.\n" +
-                "\n" +
+        text = "Cras dictum. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean lacinia mauris vel est.\n" +
                 "Suspendisse eu nisl. Nullam ut libero. Integer dignissim consequat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.";
-        WebElement result3 = _globalDriver.findElement(By.id("ui-id-8"));
-        String openText3 = result3.getText();
-        Assert.assertEquals(text3, openText3);
-
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        result = _globalDriver.findElement(By.id("ui-id-8"));
+        openText = result.getText();
+        Assert.assertEquals(openText, text);
         _globalDriver.close();
     }
 
@@ -127,11 +138,59 @@ public class Tests {
     public void testTC0701() {
         _globalDriver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         _globalDriver.findElement(By.xpath("/html/body/section/div[1]/div[2]/div[2]/ul/li[2]/a/figure")).click();//select Selectable
-        _globalDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        _globalDriver.findElement(By.xpath("/html/body/div/input")).sendKeys("jav");//erdvė, kur rašomas tekstas
+        WebElement iframe = _globalDriver.findElement(By.xpath("/html/body/section/div[1]/div[1]/div[3]/div[1]/div/iframe"));//iframe visa judėjimo erdvė
+        _globalDriver.switchTo().frame(iframe);
+        _globalDriver.findElement(By.id("tags")).sendKeys("Jav");//erdvė, kur rašomas tekstas
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         _globalDriver.findElement(By.xpath("/html/body/div/input")).sendKeys(Keys.DOWN);
+        String text = "Jav";
+        WebElement result = _globalDriver.findElement(By.id("tags"));
+        String openText = result.getText();
+        openText.contains(text);
+        _globalDriver.close();
     }
 
+    @Test//datepicker
+    public void testTC0801() {
+        _globalDriver.findElement(By.xpath("/html/body/section/div[1]/div[2]/div[2]/ul/li[3]/a/figure")).click();//select Selectable
+        WebElement iframe = _globalDriver.findElement(By.xpath("/html/body/section/div[1]/div[1]/div[3]/div[1]/div/iframe"));//iframe visa judėjimo erdvė
+        _globalDriver.switchTo().frame(iframe);
+        _globalDriver.findElement(By.id("datepicker")).click();
+        for (int i = 0; i < 3; i++) {
+            _globalDriver.findElement(By.xpath("/html/body/div/div/a[2]/span")).click();
+        }
+        _globalDriver.findElement(By.xpath("/html/body/div/table/tbody/tr[1]/td[2]/a")).click();
+        String text = "07/01/2024";
+        WebElement result = _globalDriver.findElement(By.xpath("/html/body/p/input"));
+        String openText = result.getAttribute("value");//grąžina langelio reikšmę
+        Assert.assertEquals(openText, text);
+        _globalDriver.close();
+    }
 
+    @Test//menu
+    public void testTC0901() {
+        _globalDriver.findElement(By.xpath("/html/body/section/div[1]/div[2]/div[2]/ul/li[6]/a/figure")).click();//select Selectable
+        WebElement iframe = _globalDriver.findElement(By.xpath("/html/body/section/div[1]/div[1]/div[3]/div[1]/div/iframe"));//iframe visa judėjimo erdvė
+        _globalDriver.switchTo().frame(iframe);
+        WebElement tabElement = _globalDriver.findElement(By.id("tabs-1"));
+        int initialYPosition = tabElement.getLocation().getY();
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        _globalDriver.findElement(By.xpath("/html/body/div/ul/li[1]/a")).click(); // Replace with your element locator
+        int finalYPosition = tabElement.getLocation().getY();
+        try {
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Assert.assertTrue(finalYPosition < initialYPosition, "Tabs are positioned higher after clicking");
 
+    }
 }
